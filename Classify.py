@@ -2,6 +2,9 @@ from database import fetch_bug_data
 from database import fetch_feature_data
 from database import fetch_rating_data
 from database import fetch_user_experience_data
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn import metrics
 
 import MySQLdb
 
@@ -40,10 +43,20 @@ class classify:
         # print(len(self.rating_train), len(rating_data), len(rating_target), len(not_rating_data), len(not_rating_target))
         # print(len(self.feature_train), len(feature_data), len(feature_target), len(not_feature_data), len(not_feature_target))
 
-        bug_classify(bugs_data, bugs_target, not_bugs_data, not_bugs_target, split_size)
-        user_experience_classify(user_experience_data, user_experience_target, not_user_experience_data, not_user_experience_target, split_size)
-        rating_classify(rating_data, rating_target, not_rating_data, not_rating_target, split_size)
-        feature_classify(feature_data, feature_target, not_feature_data, not_feature_target, feature_split_size)
+        bug_precision, bug_recall, bug_f1_score = bug_classify(bugs_data, bugs_target, not_bugs_data, not_bugs_target, split_size)
+        print("Bug: ", bug_precision, bug_recall, bug_f1_score)
+
+        print()
+        user_experience_precision, user_experience_recall, user_experience_f1_score = user_experience_classify(user_experience_data, user_experience_target, not_user_experience_data, not_user_experience_target, split_size)
+        print("user Experience: ", user_experience_precision, user_experience_recall, user_experience_f1_score)
+
+        print()
+        rating_precision, rating_recall, rating_f1_score = rating_classify(rating_data, rating_target, not_rating_data, not_rating_target, split_size)
+        print("Rating: ", rating_precision, rating_recall, rating_f1_score)
+
+        print()
+        feature_precision, feature_recall, feature_f1_score = feature_classify(feature_data, feature_target, not_feature_data, not_feature_target, feature_split_size)
+        print("Feature Request: ", feature_precision, feature_recall, feature_f1_score)
 
 
 def bug_classify(bugs_data, bugs_target, not_bugs_data, not_bugs_target, split_size):
@@ -55,6 +68,17 @@ def bug_classify(bugs_data, bugs_target, not_bugs_data, not_bugs_target, split_s
 
     # print(len(bugs_data_train), len(bugs_target_train), len(bugs_data_test), len(bugs_target_test))
 
+    bugs_tfidf_train_data, bugs_tfidf_test_data = vectorize(bugs_data_train, bugs_data_test)
+
+    # print(bugs_tfidf_train_data.shape, bugs_tfidf_test_data.shape)
+
+    predicted_bugs_target_test = classify_app_reviews('MultinomialNB', bugs_tfidf_train_data, bugs_target_train, bugs_tfidf_test_data)
+
+    precision, recall, f1_score = calculate_classifier_performance_metrics(bugs_target_test, predicted_bugs_target_test)
+
+    return precision, recall, f1_score
+
+
 
 def user_experience_classify(user_experience_data, user_experience_target, not_user_experience_data, not_user_experience_target, split_size):
     user_experience_data_train = user_experience_data[:split_size] + not_user_experience_data[:split_size]
@@ -64,6 +88,16 @@ def user_experience_classify(user_experience_data, user_experience_target, not_u
     user_experience_target_test = user_experience_target[split_size:] + not_user_experience_target[split_size:]
 
     # print(len(user_experience_data_train), len(user_experience_target_train), len(user_experience_data_test), len(user_experience_target_test))
+
+    user_experience_tfidf_train_data, user_experience_tfidf_test_data = vectorize(user_experience_data_train, user_experience_data_test)
+
+    # print(user_experience_tfidf_train_data.shape, user_experience_tfidf_test_data.shape)
+
+    predicted_user_experience_target_test = classify_app_reviews('MultinomialNB', user_experience_tfidf_train_data, user_experience_target_train, user_experience_tfidf_test_data)
+
+    precision, recall, f1_score = calculate_classifier_performance_metrics(user_experience_target_test, predicted_user_experience_target_test)
+
+    return precision, recall, f1_score
 
 
 def rating_classify(rating_data, rating_target, not_rating_data, not_rating_target, split_size):
@@ -75,6 +109,16 @@ def rating_classify(rating_data, rating_target, not_rating_data, not_rating_targ
 
     # print(len(rating_data_train), len(rating_target_train), len(rating_data_test), len(rating_target_test))
 
+    rating_tfidf_train_data, rating_tfidf_test_data = vectorize(rating_data_train, rating_data_test)
+
+    # print(rating_tfidf_train_data.shape, rating_tfidf_test_data.shape)
+
+    predicted_rating_target_test = classify_app_reviews('MultinomialNB', rating_tfidf_train_data, rating_target_train, rating_tfidf_test_data)
+
+    precision, recall, f1_score = calculate_classifier_performance_metrics(rating_target_test, predicted_rating_target_test)
+
+    return precision, recall, f1_score
+
 
 def feature_classify(feature_data, feature_target, not_feature_data, not_feature_target, feature_split_size):
     feature_data_train = feature_data[:feature_split_size] + not_feature_data[:feature_split_size]
@@ -84,6 +128,38 @@ def feature_classify(feature_data, feature_target, not_feature_data, not_feature
     feature_target_test = feature_target[feature_split_size:] + not_feature_target[feature_split_size:]
 
     # print(len(feature_data_train), len(feature_target_train), len(feature_data_test), len(feature_target_test))
+
+    feature_tfidf_train_data, feature_tfidf_test_data = vectorize(feature_data_train, feature_data_test)
+
+    # print(feature_tfidf_train_data.shape, feature_tfidf_test_data.shape)
+
+    predicted_feature_target_test = classify_app_reviews('MultinomialNB', feature_tfidf_train_data, feature_target_train, feature_tfidf_test_data)
+
+    precision, recall, f1_score = calculate_classifier_performance_metrics(feature_target_test, predicted_feature_target_test)
+
+    return precision, recall, f1_score
+
+
+def vectorize(data_train, data_test):
+    vectorizer = TfidfVectorizer(use_idf=False, binary=True)
+    tfidf_train_data = vectorizer.fit_transform(data_train)
+    tfidf_test_data = vectorizer.transform(data_test)
+    return tfidf_train_data, tfidf_test_data
+
+
+def classify_app_reviews(algorithm, tfidf_train_data, target_train, tfidf_test_data):
+    if algorithm == 'MultinomialNB':
+        classifier = MultinomialNB()
+    classifier.fit(tfidf_train_data, target_train)
+    predicted_target_test = classifier.predict(tfidf_test_data)
+    return predicted_target_test
+
+
+def calculate_classifier_performance_metrics(target_test, predicted_target_test):
+    precision = metrics.precision_score(target_test, predicted_target_test)
+    recall = metrics.recall_score(target_test, predicted_target_test)
+    f1_score = metrics.f1_score(target_test, predicted_target_test)
+    return precision, recall, f1_score
 
 
 def split_data(train_data, cls):
