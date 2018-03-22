@@ -62,8 +62,16 @@ def fetch_bug_data(self, nlp_type):
     self.cur.execute("SELECT * FROM Not_Bug_Report_Data_Train")
 
     for row in self.cur.fetchall():
-        decoded_row = str(row[17])
-        decoded_row = str(decoded_row)
+        if nlp_type == 'stopwords_removal_lemmatization':
+            decoded_row = str(row[17])  # 'stopwords_removal_lemmatization'
+        if nlp_type == 'stopwords_removal':
+            decoded_row = str(row[10])  # 'stopwords_removal'
+        if nlp_type == 'lemmatized_comment':
+            decoded_row = str(row[11])  # 'lemmatized_comment'
+        if nlp_type == 'original_comment':
+            decoded_row = str(row[4])  # 'original_comment'
+
+        decoded_row_1 = str(row[2])  # 'reviewId'
         rating = row[5]
         sentiScore = row[13]
         senti_pos = row[14]
@@ -98,8 +106,16 @@ def fetch_bug_data(self, nlp_type):
     self.cur.execute("SELECT * FROM Bug_Report_Data_Test")
 
     for row in self.cur.fetchall():
-        decoded_row = str(row[17])
-        decoded_row_1 = str(row[3])
+        if nlp_type == 'stopwords_removal_lemmatization':
+            decoded_row = str(row[17])  # 'stopwords_removal_lemmatization'
+        if nlp_type == 'stopwords_removal':
+            decoded_row = str(row[10])  # 'stopwords_removal'
+        if nlp_type == 'lemmatized_comment':
+            decoded_row = str(row[11])  # 'lemmatized_comment'
+        if nlp_type == 'original_comment':
+            decoded_row = str(row[4])  # 'original_comment'
+
+        decoded_row_1 = str(row[2])  # 'reviewId'
         rating = row[5]
         sentiScore = row[13]
         senti_pos = row[14]
@@ -134,8 +150,16 @@ def fetch_bug_data(self, nlp_type):
     self.cur.execute("SELECT * FROM Not_Bug_Report_Data_Test")
 
     for row in self.cur.fetchall():
-        decoded_row = str(row[17])
-        decoded_row_1 = str(row[3])
+        if nlp_type == 'stopwords_removal_lemmatization':
+            decoded_row = str(row[17])  # 'stopwords_removal_lemmatization'
+        if nlp_type == 'stopwords_removal':
+            decoded_row = str(row[10])  # 'stopwords_removal'
+        if nlp_type == 'lemmatized_comment':
+            decoded_row = str(row[11])  # 'lemmatized_comment'
+        if nlp_type == 'original_comment':
+            decoded_row = str(row[4])  # 'original_comment'
+
+        decoded_row_1 = str(row[2])  # 'reviewId'
         rating = row[5]
         sentiScore = row[13]
         senti_pos = row[14]
@@ -237,8 +261,16 @@ def fetch_user_experience_data(self, nlp_type):
     self.cur.execute("SELECT * FROM not_userexperience_data_train")
 
     for row in self.cur.fetchall():
-        decoded_row = str(row[17])
-        decoded_row = str(decoded_row)
+        if nlp_type == 'stopwords_removal_lemmatization':
+            decoded_row = str(row[17])  # 'stopwords_removal_lemmatization'
+        if nlp_type == 'stopwords_removal':
+            decoded_row = str(row[10])  # 'stopwords_removal'
+        if nlp_type == 'lemmatized_comment':
+            decoded_row = str(row[11])  # 'lemmatized_comment'
+        if nlp_type == 'original_comment':
+            decoded_row = str(row[4])  # 'original_comment'
+
+        decoded_row_1 = str(row[2])  # 'reviewId'
         rating = row[5]
         sentiScore = row[13]
         senti_pos = row[14]
@@ -273,8 +305,16 @@ def fetch_user_experience_data(self, nlp_type):
     self.cur.execute("SELECT * FROM userexperience_data_test")
 
     for row in self.cur.fetchall():
-        decoded_row = str(row[17])
-        decoded_row_1 = str(row[3])
+        if nlp_type == 'stopwords_removal_lemmatization':
+            decoded_row = str(row[17])  # 'stopwords_removal_lemmatization'
+        if nlp_type == 'stopwords_removal':
+            decoded_row = str(row[10])  # 'stopwords_removal'
+        if nlp_type == 'lemmatized_comment':
+            decoded_row = str(row[11])  # 'lemmatized_comment'
+        if nlp_type == 'original_comment':
+            decoded_row = str(row[4])  # 'original_comment'
+
+        decoded_row_1 = str(row[2])  # 'reviewId'
         rating = row[5]
         sentiScore = row[13]
         senti_pos = row[14]
@@ -309,8 +349,16 @@ def fetch_user_experience_data(self, nlp_type):
     self.cur.execute("SELECT * FROM not_userexperience_data_test")
 
     for row in self.cur.fetchall():
-        decoded_row = str(row[17])
-        decoded_row_1 = str(row[3])
+        if nlp_type == 'stopwords_removal_lemmatization':
+            decoded_row = str(row[17])  # 'stopwords_removal_lemmatization'
+        if nlp_type == 'stopwords_removal':
+            decoded_row = str(row[10])  # 'stopwords_removal'
+        if nlp_type == 'lemmatized_comment':
+            decoded_row = str(row[11])  # 'lemmatized_comment'
+        if nlp_type == 'original_comment':
+            decoded_row = str(row[4])  # 'original_comment'
+
+        decoded_row_1 = str(row[2])  # 'reviewId'
         rating = row[5]
         sentiScore = row[13]
         senti_pos = row[14]
@@ -411,8 +459,16 @@ def fetch_rating_data(self, nlp_type):
     self.cur.execute("SELECT * FROM not_rating_data_train")
 
     for row in self.cur.fetchall():
-        decoded_row = str(row[17])
-        decoded_row = str(decoded_row)
+        if nlp_type == 'stopwords_removal_lemmatization':
+            decoded_row = str(row[17])  # 'stopwords_removal_lemmatization'
+        if nlp_type == 'stopwords_removal':
+            decoded_row = str(row[10])  # 'stopwords_removal'
+        if nlp_type == 'lemmatized_comment':
+            decoded_row = str(row[11])  # 'lemmatized_comment'
+        if nlp_type == 'original_comment':
+            decoded_row = str(row[4])  # 'original_comment'
+
+        decoded_row_1 = str(row[2])  # 'reviewId'
         rating = row[5]
         sentiScore = row[13]
         senti_pos = row[14]
@@ -447,8 +503,16 @@ def fetch_rating_data(self, nlp_type):
     self.cur.execute("SELECT * FROM rating_data_test")
 
     for row in self.cur.fetchall():
-        decoded_row = str(row[17])
-        decoded_row_1 = str(row[3])
+        if nlp_type == 'stopwords_removal_lemmatization':
+            decoded_row = str(row[17])  # 'stopwords_removal_lemmatization'
+        if nlp_type == 'stopwords_removal':
+            decoded_row = str(row[10])  # 'stopwords_removal'
+        if nlp_type == 'lemmatized_comment':
+            decoded_row = str(row[11])  # 'lemmatized_comment'
+        if nlp_type == 'original_comment':
+            decoded_row = str(row[4])  # 'original_comment'
+
+        decoded_row_1 = str(row[2])  # 'reviewId'
         rating = row[5]
         sentiScore = row[13]
         senti_pos = row[14]
@@ -483,8 +547,16 @@ def fetch_rating_data(self, nlp_type):
     self.cur.execute("SELECT * FROM not_rating_data_test")
 
     for row in self.cur.fetchall():
-        decoded_row = str(row[17])
-        decoded_row_1 = str(row[3])
+        if nlp_type == 'stopwords_removal_lemmatization':
+            decoded_row = str(row[17])  # 'stopwords_removal_lemmatization'
+        if nlp_type == 'stopwords_removal':
+            decoded_row = str(row[10])  # 'stopwords_removal'
+        if nlp_type == 'lemmatized_comment':
+            decoded_row = str(row[11])  # 'lemmatized_comment'
+        if nlp_type == 'original_comment':
+            decoded_row = str(row[4])  # 'original_comment'
+
+        decoded_row_1 = str(row[2])  # 'reviewId'
         rating = row[5]
         sentiScore = row[13]
         senti_pos = row[14]
@@ -586,8 +658,16 @@ def fetch_feature_data(self, nlp_type):
     self.cur.execute("SELECT * FROM not_feature_or_improvment_request_data_train")
 
     for row in self.cur.fetchall():
-        decoded_row = str(row[17])
-        decoded_row = str(decoded_row)
+        if nlp_type == 'stopwords_removal_lemmatization':
+            decoded_row = str(row[17])  # 'stopwords_removal_lemmatization'
+        if nlp_type == 'stopwords_removal':
+            decoded_row = str(row[10])  # 'stopwords_removal'
+        if nlp_type == 'lemmatized_comment':
+            decoded_row = str(row[11])  # 'lemmatized_comment'
+        if nlp_type == 'original_comment':
+            decoded_row = str(row[4])  # 'original_comment'
+
+        decoded_row_1 = str(row[2])  # 'reviewId'
         rating = row[5]
         sentiScore = row[13]
         senti_pos = row[14]
@@ -622,8 +702,16 @@ def fetch_feature_data(self, nlp_type):
     self.cur.execute("SELECT * FROM feature_or_improvment_request_data_test")
 
     for row in self.cur.fetchall():
-        decoded_row = str(row[17])
-        decoded_row_1 = str(row[3])
+        if nlp_type == 'stopwords_removal_lemmatization':
+            decoded_row = str(row[17])  # 'stopwords_removal_lemmatization'
+        if nlp_type == 'stopwords_removal':
+            decoded_row = str(row[10])  # 'stopwords_removal'
+        if nlp_type == 'lemmatized_comment':
+            decoded_row = str(row[11])  # 'lemmatized_comment'
+        if nlp_type == 'original_comment':
+            decoded_row = str(row[4])  # 'original_comment'
+
+        decoded_row_1 = str(row[2])  # 'reviewId'
         rating = row[5]
         sentiScore = row[13]
         senti_pos = row[14]
@@ -658,8 +746,16 @@ def fetch_feature_data(self, nlp_type):
     self.cur.execute("SELECT * FROM not_feature_or_improvment_request_data_test")
 
     for row in self.cur.fetchall():
-        decoded_row = str(row[17])
-        decoded_row_1 = str(row[3])
+        if nlp_type == 'stopwords_removal_lemmatization':
+            decoded_row = str(row[17])  # 'stopwords_removal_lemmatization'
+        if nlp_type == 'stopwords_removal':
+            decoded_row = str(row[10])  # 'stopwords_removal'
+        if nlp_type == 'lemmatized_comment':
+            decoded_row = str(row[11])  # 'lemmatized_comment'
+        if nlp_type == 'original_comment':
+            decoded_row = str(row[4])  # 'original_comment'
+
+        decoded_row_1 = str(row[2])  # 'reviewId'
         rating = row[5]
         sentiScore = row[13]
         senti_pos = row[14]
