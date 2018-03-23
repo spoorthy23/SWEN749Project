@@ -4,6 +4,8 @@ from database import fetch_rating_data
 from database import fetch_user_experience_data
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
+from sklearn import tree
+from sklearn.linear_model import LogisticRegression
 from sklearn import metrics
 
 import MySQLdb
@@ -26,7 +28,12 @@ class classify:
         stopwords_removal_lemmatization = 'stopwords_removal_lemmatization'
         original_comment = 'original_comment'
 
+        MultinomialNB = 'MultinomialNB'
+        Tree = 'Tree'
+        LogisticRegression = 'MultinomialNB'
+
         nlp_type = original_comment
+        classifier = LogisticRegression
 
         self.bug_train, self.bug_rating_dict, self.bug_senti_dict, self.bug_senti_pos_dict, self.bug_senti_neg_dict, self.bug_present_simple_dict, self.bug_past_simple_dict, self.bug_future_dict, self.bug_present_con_dict, self.bug_cls, self.not_bug_cls = fetch_bug_data(
             self, nlp_type)
@@ -45,44 +52,44 @@ class classify:
         rating_data, rating_target, not_rating_data, not_rating_target = split_data(self.rating_train, self.rating_cls)
         feature_data, feature_target, not_feature_data, not_feature_target = split_data(self.feature_train, self.feature_cls)
 
-        bug_precision, bug_recall, bug_f1_score = bug_classify(bugs_data, bugs_target, not_bugs_data, not_bugs_target)
+        bug_precision, bug_recall, bug_f1_score = bug_classify(bugs_data, bugs_target, not_bugs_data, not_bugs_target, classifier)
         print("Bug: ", bug_precision, bug_recall, bug_f1_score)
-        user_experience_precision, user_experience_recall, user_experience_f1_score = user_experience_classify(user_experience_data, user_experience_target, not_user_experience_data, not_user_experience_target)
+        user_experience_precision, user_experience_recall, user_experience_f1_score = user_experience_classify(user_experience_data, user_experience_target, not_user_experience_data, not_user_experience_target, classifier)
         print("user Experience: ", user_experience_precision, user_experience_recall, user_experience_f1_score)
-        rating_precision, rating_recall, rating_f1_score = rating_classify(rating_data, rating_target, not_rating_data, not_rating_target)
+        rating_precision, rating_recall, rating_f1_score = rating_classify(rating_data, rating_target, not_rating_data, not_rating_target, classifier)
         print("Rating: ", rating_precision, rating_recall, rating_f1_score)
-        feature_precision, feature_recall, feature_f1_score = feature_classify(feature_data, feature_target, not_feature_data, not_feature_target)
+        feature_precision, feature_recall, feature_f1_score = feature_classify(feature_data, feature_target, not_feature_data, not_feature_target, classifier)
         print("Feature Request: ", feature_precision, feature_recall, feature_f1_score)
 
 
-def bug_classify(bugs_data, bugs_target, not_bugs_data, not_bugs_target):
+def bug_classify(bugs_data, bugs_target, not_bugs_data, not_bugs_target, classifier):
     bugs_data_train, bugs_target_train, bugs_data_test, bugs_target_test = prepare_data_for_classification(bugs_data, bugs_target, not_bugs_data, not_bugs_target, is_feature=False)
     bugs_tfidf_train_data, bugs_tfidf_test_data = vectorize(bugs_data_train, bugs_data_test)
-    predicted_bugs_target_test = classify_app_reviews('MultinomialNB', bugs_tfidf_train_data, bugs_target_train, bugs_tfidf_test_data)
+    predicted_bugs_target_test = classify_app_reviews(classifier, bugs_tfidf_train_data, bugs_target_train, bugs_tfidf_test_data)
     precision, recall, f1_score = calculate_classifier_performance_metrics(bugs_target_test, predicted_bugs_target_test)
     return precision, recall, f1_score
 
 
-def user_experience_classify(user_experience_data, user_experience_target, not_user_experience_data, not_user_experience_target):
+def user_experience_classify(user_experience_data, user_experience_target, not_user_experience_data, not_user_experience_target, classifier):
     user_experience_data_train, user_experience_target_train, user_experience_data_test, user_experience_target_test = prepare_data_for_classification(user_experience_data, user_experience_target, not_user_experience_data, not_user_experience_target, is_feature=False)
     user_experience_tfidf_train_data, user_experience_tfidf_test_data = vectorize(user_experience_data_train, user_experience_data_test)
-    predicted_user_experience_target_test = classify_app_reviews('MultinomialNB', user_experience_tfidf_train_data, user_experience_target_train, user_experience_tfidf_test_data)
+    predicted_user_experience_target_test = classify_app_reviews(classifier, user_experience_tfidf_train_data, user_experience_target_train, user_experience_tfidf_test_data)
     precision, recall, f1_score = calculate_classifier_performance_metrics(user_experience_target_test, predicted_user_experience_target_test)
     return precision, recall, f1_score
 
 
-def rating_classify(rating_data, rating_target, not_rating_data, not_rating_target):
+def rating_classify(rating_data, rating_target, not_rating_data, not_rating_target, classifier):
     rating_data_train, rating_target_train, rating_data_test, rating_target_test = prepare_data_for_classification(rating_data, rating_target, not_rating_data, not_rating_target, is_feature=False)
     rating_tfidf_train_data, rating_tfidf_test_data = vectorize(rating_data_train, rating_data_test)
-    predicted_rating_target_test = classify_app_reviews('MultinomialNB', rating_tfidf_train_data, rating_target_train, rating_tfidf_test_data)
+    predicted_rating_target_test = classify_app_reviews(classifier, rating_tfidf_train_data, rating_target_train, rating_tfidf_test_data)
     precision, recall, f1_score = calculate_classifier_performance_metrics(rating_target_test, predicted_rating_target_test)
     return precision, recall, f1_score
 
 
-def feature_classify(feature_data, feature_target, not_feature_data, not_feature_target):
+def feature_classify(feature_data, feature_target, not_feature_data, not_feature_target, classifier):
     feature_data_train, feature_target_train, feature_data_test, feature_target_test = prepare_data_for_classification(feature_data, feature_target, not_feature_data, not_feature_target, is_feature=True)
     feature_tfidf_train_data, feature_tfidf_test_data = vectorize(feature_data_train, feature_data_test)
-    predicted_feature_target_test = classify_app_reviews('MultinomialNB', feature_tfidf_train_data, feature_target_train, feature_tfidf_test_data)
+    predicted_feature_target_test = classify_app_reviews(classifier, feature_tfidf_train_data, feature_target_train, feature_tfidf_test_data)
     precision, recall, f1_score = calculate_classifier_performance_metrics(feature_target_test, predicted_feature_target_test)
     return precision, recall, f1_score
 
@@ -98,6 +105,10 @@ def vectorize(data_train, data_test):
 def classify_app_reviews(algorithm, tfidf_train_data, target_train, tfidf_test_data):
     if algorithm == 'MultinomialNB':
         classifier = MultinomialNB()
+    if algorithm == 'Tree':
+        classifier = tree.DecisionTreeClassifier()
+    if algorithm == 'LogisticRegression':
+        classifier = LogisticRegression()
     classifier.fit(tfidf_train_data, target_train)
     predicted_target_test = classifier.predict(tfidf_test_data)
     return predicted_target_test
