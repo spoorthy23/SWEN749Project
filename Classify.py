@@ -30,10 +30,10 @@ class classify:
 
         MultinomialNB = 'MultinomialNB'
         Tree = 'Tree'
-        LogisticRegression = 'MultinomialNB'
+        LogisticRegression = 'LogisticRegression'
 
         nlp_type = original_comment
-        classifier = LogisticRegression
+        classifier = MultinomialNB
 
         self.bug_train, self.bug_rating_dict, self.bug_senti_dict, self.bug_senti_pos_dict, self.bug_senti_neg_dict, self.bug_present_simple_dict, self.bug_past_simple_dict, self.bug_future_dict, self.bug_present_con_dict, self.bug_cls, self.not_bug_cls = fetch_bug_data(
             self, nlp_type)
