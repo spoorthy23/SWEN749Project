@@ -7,11 +7,15 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn import tree
 from sklearn.linear_model import LogisticRegression
 from sklearn import metrics
+from scipy.sparse import vstack, hstack
+import numpy as np
 
 import MySQLdb
 
 split_size = 260
 feature_split_size = 207
+
+use_metadata = True
 
 class classify:
     def __init__(self):
@@ -33,11 +37,11 @@ class classify:
         LogisticRegression = 'LogisticRegression'
 
         nlp_type = original_comment
-        classifier = MultinomialNB
+        classifier = LogisticRegression
 
         self.bug_train, self.bug_rating_dict, self.bug_senti_dict, self.bug_senti_pos_dict, self.bug_senti_neg_dict, self.bug_present_simple_dict, self.bug_past_simple_dict, self.bug_future_dict, self.bug_present_con_dict, self.bug_cls, self.not_bug_cls = fetch_bug_data(
             self, nlp_type)
-        self.feature_train, self.feature_rating_dict, self.feature_senti_dict, self._senti_pos_dict, self.feature_senti_neg_dict, self.feature_present_simple_dict, self.feature_past_simple_dict, self.feature_future_dict, self.feature_present_con_dict, self.feature_cls, self.not_feature_cls = fetch_feature_data(
+        self.feature_train, self.feature_rating_dict, self.feature_senti_dict, self.feature_senti_pos_dict, self.feature_senti_neg_dict, self.feature_present_simple_dict, self.feature_past_simple_dict, self.feature_future_dict, self.feature_present_con_dict, self.feature_cls, self.not_feature_cls = fetch_feature_data(
             self, nlp_type)
         self.rating_train, self.rating_rating_dict, self.rating_senti_dict, self.rating_senti_pos_dict, self.rating_senti_neg_dict, self.rating_present_simple_dict, self.rating_past_simple_dict, self.rating_future_dict, self.rating_present_con_dict, self.rating_cls, self.not_rating_cls = fetch_rating_data(
             self, nlp_type)
@@ -52,53 +56,63 @@ class classify:
         rating_data, rating_target, not_rating_data, not_rating_target = split_data(self.rating_train, self.rating_cls)
         feature_data, feature_target, not_feature_data, not_feature_target = split_data(self.feature_train, self.feature_cls)
 
-        bug_precision, bug_recall, bug_f1_score = bug_classify(bugs_data, bugs_target, not_bugs_data, not_bugs_target, classifier)
+        bug_precision, bug_recall, bug_f1_score = bug_classify(bugs_data, bugs_target, not_bugs_data, not_bugs_target, self.bug_rating_dict, self.bug_senti_dict, self.bug_senti_pos_dict, self.bug_senti_neg_dict, self.bug_present_simple_dict, self.bug_past_simple_dict, self.bug_future_dict, self.bug_present_con_dict, classifier)
         print("Bug: ", bug_precision, bug_recall, bug_f1_score)
-        user_experience_precision, user_experience_recall, user_experience_f1_score = user_experience_classify(user_experience_data, user_experience_target, not_user_experience_data, not_user_experience_target, classifier)
+        user_experience_precision, user_experience_recall, user_experience_f1_score = user_experience_classify(user_experience_data, user_experience_target, not_user_experience_data, not_user_experience_target, self.user_experience_rating_dict, self.user_experience_senti_dict, self.user_experience_senti_pos_dict, self.user_experience_senti_neg_dict, self.user_experience_present_simple_dict, self.user_experience_past_simple_dict, self.user_experience_future_dict, self.user_experience_present_con_dict, classifier)
         print("user Experience: ", user_experience_precision, user_experience_recall, user_experience_f1_score)
-        rating_precision, rating_recall, rating_f1_score = rating_classify(rating_data, rating_target, not_rating_data, not_rating_target, classifier)
+        rating_precision, rating_recall, rating_f1_score = rating_classify(rating_data, rating_target, not_rating_data, not_rating_target, self.rating_rating_dict, self.rating_senti_dict, self.rating_senti_pos_dict, self.rating_senti_neg_dict, self.rating_present_simple_dict, self.rating_past_simple_dict, self.rating_future_dict, self.rating_present_con_dict, classifier)
         print("Rating: ", rating_precision, rating_recall, rating_f1_score)
-        feature_precision, feature_recall, feature_f1_score = feature_classify(feature_data, feature_target, not_feature_data, not_feature_target, classifier)
+        feature_precision, feature_recall, feature_f1_score = feature_classify(feature_data, feature_target, not_feature_data, not_feature_target, self.feature_rating_dict, self.feature_senti_dict, self.feature_senti_pos_dict, self.feature_senti_neg_dict, self.feature_present_simple_dict, self.feature_past_simple_dict, self.feature_future_dict, self.feature_present_con_dict, classifier)
         print("Feature Request: ", feature_precision, feature_recall, feature_f1_score)
 
 
-def bug_classify(bugs_data, bugs_target, not_bugs_data, not_bugs_target, classifier):
+def bug_classify(bugs_data, bugs_target, not_bugs_data, not_bugs_target, bug_rating_dict, bug_senti_dict, bug_senti_pos_dict, bug_senti_neg_dict, bug_present_simple_dict, bug_past_simple_dict, bug_future_dict, bug_present_con_dict, classifier):
     bugs_data_train, bugs_target_train, bugs_data_test, bugs_target_test = prepare_data_for_classification(bugs_data, bugs_target, not_bugs_data, not_bugs_target, is_feature=False)
-    bugs_tfidf_train_data, bugs_tfidf_test_data = vectorize(bugs_data_train, bugs_data_test)
+    bugs_tfidf_train_data, bugs_tfidf_test_data = vectorize(bugs_data_train, bugs_data_test, bug_rating_dict, bug_senti_dict, bug_senti_pos_dict, bug_senti_neg_dict, bug_present_simple_dict, bug_past_simple_dict, bug_future_dict, bug_present_con_dict)
     predicted_bugs_target_test = classify_app_reviews(classifier, bugs_tfidf_train_data, bugs_target_train, bugs_tfidf_test_data)
     precision, recall, f1_score = calculate_classifier_performance_metrics(bugs_target_test, predicted_bugs_target_test)
     return precision, recall, f1_score
 
 
-def user_experience_classify(user_experience_data, user_experience_target, not_user_experience_data, not_user_experience_target, classifier):
+def user_experience_classify(user_experience_data, user_experience_target, not_user_experience_data, not_user_experience_target, user_experience_rating_dict, user_experience_senti_dict, user_experience_senti_pos_dict, user_experience_senti_neg_dict, user_experience_present_simple_dict, user_experience_past_simple_dict, user_experience_future_dict, user_experience_present_con_dict, classifier):
     user_experience_data_train, user_experience_target_train, user_experience_data_test, user_experience_target_test = prepare_data_for_classification(user_experience_data, user_experience_target, not_user_experience_data, not_user_experience_target, is_feature=False)
-    user_experience_tfidf_train_data, user_experience_tfidf_test_data = vectorize(user_experience_data_train, user_experience_data_test)
+    user_experience_tfidf_train_data, user_experience_tfidf_test_data = vectorize(user_experience_data_train, user_experience_data_test, user_experience_rating_dict, user_experience_senti_dict, user_experience_senti_pos_dict, user_experience_senti_neg_dict, user_experience_present_simple_dict, user_experience_past_simple_dict, user_experience_future_dict, user_experience_present_con_dict)
     predicted_user_experience_target_test = classify_app_reviews(classifier, user_experience_tfidf_train_data, user_experience_target_train, user_experience_tfidf_test_data)
     precision, recall, f1_score = calculate_classifier_performance_metrics(user_experience_target_test, predicted_user_experience_target_test)
     return precision, recall, f1_score
 
 
-def rating_classify(rating_data, rating_target, not_rating_data, not_rating_target, classifier):
+def rating_classify(rating_data, rating_target, not_rating_data, not_rating_target, rating_rating_dict, rating_senti_dict, rating_senti_pos_dict, rating_senti_neg_dict, rating_present_simple_dict, rating_past_simple_dict, rating_future_dict, rating_present_con_dict, classifier):
     rating_data_train, rating_target_train, rating_data_test, rating_target_test = prepare_data_for_classification(rating_data, rating_target, not_rating_data, not_rating_target, is_feature=False)
-    rating_tfidf_train_data, rating_tfidf_test_data = vectorize(rating_data_train, rating_data_test)
+    rating_tfidf_train_data, rating_tfidf_test_data = vectorize(rating_data_train, rating_data_test, rating_rating_dict, rating_senti_dict, rating_senti_pos_dict, rating_senti_neg_dict, rating_present_simple_dict, rating_past_simple_dict, rating_future_dict, rating_present_con_dict)
     predicted_rating_target_test = classify_app_reviews(classifier, rating_tfidf_train_data, rating_target_train, rating_tfidf_test_data)
     precision, recall, f1_score = calculate_classifier_performance_metrics(rating_target_test, predicted_rating_target_test)
     return precision, recall, f1_score
 
 
-def feature_classify(feature_data, feature_target, not_feature_data, not_feature_target, classifier):
+def feature_classify(feature_data, feature_target, not_feature_data, not_feature_target, feature_rating_dict, feature_senti_dict, feature_senti_pos_dict, feature_senti_neg_dict, feature_present_simple_dict, feature_past_simple_dict, feature_future_dict, feature_present_con_dict, classifier):
     feature_data_train, feature_target_train, feature_data_test, feature_target_test = prepare_data_for_classification(feature_data, feature_target, not_feature_data, not_feature_target, is_feature=True)
-    feature_tfidf_train_data, feature_tfidf_test_data = vectorize(feature_data_train, feature_data_test)
+    feature_tfidf_train_data, feature_tfidf_test_data = vectorize(feature_data_train, feature_data_test, feature_rating_dict, feature_senti_dict, feature_senti_pos_dict, feature_senti_neg_dict, feature_present_simple_dict, feature_past_simple_dict, feature_future_dict, feature_present_con_dict)
     predicted_feature_target_test = classify_app_reviews(classifier, feature_tfidf_train_data, feature_target_train, feature_tfidf_test_data)
     precision, recall, f1_score = calculate_classifier_performance_metrics(feature_target_test, predicted_feature_target_test)
     return precision, recall, f1_score
 
 
 
-def vectorize(data_train, data_test):
+def vectorize(data_train, data_test, rating_dict, senti_dict, senti_pos_dict, senti_neg_dict, present_simple_dict, past_simple_dict, future_dict, present_con_dict):
     vectorizer = TfidfVectorizer(use_idf=False, binary=True)
     tfidf_train_data = vectorizer.fit_transform(data_train)
     tfidf_test_data = vectorizer.transform(data_test)
+    if use_metadata:
+        train_review_rating, test_review_rating = get_review_rating_metadata(data_train, data_test, rating_dict)
+        train_review_sentiment, test_review_sentiment = get_review_sentiment_metadata(data_train, data_test, senti_dict)
+        train_review_present_simple_tense, test_review_present_simple_tense, train_review_past_simple_tense, test_review_past_simple_tense, train_review_future_tense, test_review_future_tense, train_review_continuous_tense, test_review_continuous_tense = get_review_tense_metadata(data_train, data_test, present_simple_dict, past_simple_dict, future_dict, present_con_dict)
+        tfidf_train_data, tfidf_test_data = add_features_to_vectorized_data(tfidf_train_data, tfidf_test_data, train_review_rating, test_review_rating)
+        tfidf_train_data, tfidf_test_data = add_features_to_vectorized_data(tfidf_train_data, tfidf_test_data, train_review_sentiment, test_review_sentiment)
+        tfidf_train_data, tfidf_test_data = add_features_to_vectorized_data(tfidf_train_data, tfidf_test_data, train_review_present_simple_tense, test_review_present_simple_tense)
+        tfidf_train_data, tfidf_test_data = add_features_to_vectorized_data(tfidf_train_data, tfidf_test_data, train_review_past_simple_tense, test_review_past_simple_tense)
+        tfidf_train_data, tfidf_test_data = add_features_to_vectorized_data(tfidf_train_data, tfidf_test_data, train_review_future_tense, test_review_future_tense)
+        tfidf_train_data, tfidf_test_data = add_features_to_vectorized_data(tfidf_train_data, tfidf_test_data, train_review_continuous_tense, test_review_continuous_tense)
     return tfidf_train_data, tfidf_test_data
 
 
@@ -127,6 +141,68 @@ def prepare_data_for_classification(data, target, not_data, not_target, is_featu
     data_test = data[feature_split_size if is_feature else split_size:] + not_data[feature_split_size if is_feature else split_size:]
     target_test = target[feature_split_size if is_feature else split_size:] + not_target[feature_split_size if is_feature else split_size:]
     return data_train, target_train, data_test, target_test
+
+
+def get_review_rating_metadata(data_train, data_test, rating_dict):
+    train_review_rating = []
+    test_review_rating = []
+    for i in data_train:
+        train_review_rating.append([rating_dict.get(i)])
+    for i in data_test:
+        test_review_rating.append([rating_dict.get(i)])
+    return train_review_rating, test_review_rating
+
+
+def get_review_sentiment_metadata(data_train, data_test, senti_dict):
+    train_review_sentiment = []
+    test_review_sentiment = []
+    for i in data_train:
+        train_review_sentiment.append([senti_dict.get(i)])
+    for i in data_test:
+        test_review_sentiment.append([senti_dict.get(i)])
+    return train_review_sentiment, test_review_sentiment
+
+
+def get_review_2x_sentiment_metadata(data_train, data_test, senti_pos_dict, senti_neg_dict):
+    train_review_positive_sentiment = []
+    test_review_positive_sentiment = []
+    train_review_negative_sentiment = []
+    test_review_negative_sentiment = []
+    for i in data_train:
+        train_review_positive_sentiment.append([senti_pos_dict.get(i)])
+        train_review_negative_sentiment.append([senti_neg_dict.get(i)])
+    for i in data_test:
+        test_review_positive_sentiment.append([senti_pos_dict.get(i)])
+        test_review_negative_sentiment.append([senti_neg_dict.get(i)])
+    return train_review_positive_sentiment, test_review_positive_sentiment, train_review_negative_sentiment, test_review_negative_sentiment
+
+
+def get_review_tense_metadata(data_train, data_test, present_simple_dict, past_simple_dict, future_dict, present_con_dict):
+    train_review_present_simple_tense = []
+    test_review_present_simple_tense = []
+    train_review_past_simple_tense = []
+    test_review_past_simple_tense = []
+    train_review_future_tense = []
+    test_review_future_tense = []
+    train_review_continuous_tense = []
+    test_review_continuous_tense = []
+    for i in data_train:
+        train_review_present_simple_tense.append([present_simple_dict.get(i)])
+        train_review_past_simple_tense.append([past_simple_dict.get(i)])
+        train_review_future_tense.append([future_dict.get(i)])
+        train_review_continuous_tense.append([present_con_dict.get(i)])
+    for i in data_test:
+        test_review_present_simple_tense.append([present_simple_dict.get(i)])
+        test_review_past_simple_tense.append([past_simple_dict.get(i)])
+        test_review_future_tense.append([future_dict.get(i)])
+        test_review_continuous_tense.append([present_con_dict.get(i)])
+    return train_review_present_simple_tense, test_review_present_simple_tense, train_review_past_simple_tense, test_review_past_simple_tense, train_review_future_tense, test_review_future_tense, train_review_continuous_tense, test_review_continuous_tense
+
+
+def add_features_to_vectorized_data(tfidf_train_data, tfidf_test_data, train_feature, test_feature):
+    tfidf_train_data = hstack((tfidf_train_data, np.array(train_feature)))
+    tfidf_test_data = hstack((tfidf_test_data, np.array(test_feature)))
+    return tfidf_train_data, tfidf_test_data
 
 
 def split_data(train_data, cls):

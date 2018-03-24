@@ -35,24 +35,11 @@ def fetch_bug_data(self, nlp_type):
         present_con = row[20]
         past_simple = row[21]
         future = row[22]
-        if present_simple:
-            present_simple = float(int(present_simple))
-            present_simple_dict.update({decoded_row: present_simple})
-        if present_con:
-            present_con = float(int(present_con))
-            present_con_dict.update({decoded_row: present_con})
-        if past_simple:
-            past_simple = float(int(past_simple))
-            past_simple_dict.update({decoded_row: past_simple})
-        if future:
-            future = float(int(future))
-            future_dict.update({decoded_row: future})
-        if rating:
-            rating = float(rating)
-            rating = int(rating)
-            rating_dict.update({decoded_row: rating})
-            rating_dict.update({decoded_row_1: rating})
-
+        present_simple_dict.update({decoded_row: present_simple})
+        present_con_dict.update({decoded_row: present_con})
+        past_simple_dict.update({decoded_row: past_simple})
+        future_dict.update({decoded_row: future})
+        rating_dict.update({decoded_row: rating})
         senti_dict.update({decoded_row: sentiScore})
         senti_pos_dict.update({decoded_row: senti_pos})
         senti_neg_dict.update({decoded_row: senti_neg})
@@ -80,23 +67,11 @@ def fetch_bug_data(self, nlp_type):
         present_con = row[20]
         past_simple = row[21]
         future = row[22]
-        if present_simple:
-            present_simple = float(int(present_simple))
-            present_simple_dict.update({decoded_row: present_simple})
-        if present_con:
-            present_con = float(int(present_con))
-            present_con_dict.update({decoded_row: present_con})
-        if past_simple:
-            past_simple = float(int(past_simple))
-            past_simple_dict.update({decoded_row: past_simple})
-        if future:
-            future = float(int(future))
-            future_dict.update({decoded_row: future})
-        if rating:
-            rating = float(rating)
-            rating = int(rating)
-            rating_dict.update({decoded_row: rating})
-            rating_dict.update({decoded_row_1: rating})
+        present_simple_dict.update({decoded_row: present_simple})
+        present_con_dict.update({decoded_row: present_con})
+        past_simple_dict.update({decoded_row: past_simple})
+        future_dict.update({decoded_row: future})
+        rating_dict.update({decoded_row: rating})
         senti_dict.update({decoded_row: sentiScore})
         senti_pos_dict.update({decoded_row: senti_pos})
         senti_neg_dict.update({decoded_row: senti_neg})
@@ -124,23 +99,11 @@ def fetch_bug_data(self, nlp_type):
         present_con = row[20]
         past_simple = row[21]
         future = row[22]
-        if present_simple:
-            present_simple = float(int(present_simple))
-            present_simple_dict.update({decoded_row: present_simple})
-        if present_con:
-            present_con = float(int(present_con))
-            present_con_dict.update({decoded_row: present_con})
-        if past_simple:
-            past_simple = float(int(past_simple))
-            past_simple_dict.update({decoded_row: past_simple})
-        if future:
-            future = float(int(future))
-            future_dict.update({decoded_row: future})
-        if rating:
-            rating = float(rating)
-            rating = int(rating)
-            rating_dict.update({decoded_row: rating})
-            rating_dict.update({decoded_row_1: rating})
+        present_simple_dict.update({decoded_row: present_simple})
+        present_con_dict.update({decoded_row: present_con})
+        past_simple_dict.update({decoded_row: past_simple})
+        future_dict.update({decoded_row: future})
+        rating_dict.update({decoded_row: rating})
         senti_dict.update({decoded_row: sentiScore})
         senti_pos_dict.update({decoded_row: senti_pos})
         senti_neg_dict.update({decoded_row: senti_neg})
@@ -168,23 +131,11 @@ def fetch_bug_data(self, nlp_type):
         present_con = row[20]
         past_simple = row[21]
         future = row[22]
-        if present_simple:
-            present_simple = float(int(present_simple))
-            present_simple_dict.update({decoded_row: present_simple})
-        if present_con:
-            present_con = float(int(present_con))
-            present_con_dict.update({decoded_row: present_con})
-        if past_simple:
-            past_simple = float(int(past_simple))
-            past_simple_dict.update({decoded_row: past_simple})
-        if future:
-            future = float(int(future))
-            future_dict.update({decoded_row: future})
-        if rating:
-            rating = float(rating)
-            rating = int(rating)
-            rating_dict.update({decoded_row: rating})
-            rating_dict.update({decoded_row_1: rating})
+        present_simple_dict.update({decoded_row: present_simple})
+        present_con_dict.update({decoded_row: present_con})
+        past_simple_dict.update({decoded_row: past_simple})
+        future_dict.update({decoded_row: future})
+        rating_dict.update({decoded_row: rating})
         senti_dict.update({decoded_row: sentiScore})
         senti_pos_dict.update({decoded_row: senti_pos})
         senti_neg_dict.update({decoded_row: senti_neg})
@@ -234,24 +185,11 @@ def fetch_user_experience_data(self, nlp_type):
         present_con = row[20]
         past_simple = row[21]
         future = row[22]
-        if present_simple:
-            present_simple = float(int(present_simple))
-            present_simple_dict.update({decoded_row: present_simple})
-        if present_con:
-            present_con = float(int(present_con))
-            present_con_dict.update({decoded_row: present_con})
-        if past_simple:
-            past_simple = float(int(past_simple))
-            past_simple_dict.update({decoded_row: past_simple})
-        if future:
-            future = float(int(future))
-            future_dict.update({decoded_row: future})
-        if rating:
-            rating = float(rating)
-            rating = int(rating)
-            rating_dict.update({decoded_row: rating})
-            rating_dict.update({decoded_row_1: rating})
-
+        present_simple_dict.update({decoded_row: present_simple})
+        present_con_dict.update({decoded_row: present_con})
+        past_simple_dict.update({decoded_row: past_simple})
+        future_dict.update({decoded_row: future})
+        rating_dict.update({decoded_row: rating})
         senti_dict.update({decoded_row: sentiScore})
         senti_pos_dict.update({decoded_row: senti_pos})
         senti_neg_dict.update({decoded_row: senti_neg})
@@ -279,23 +217,11 @@ def fetch_user_experience_data(self, nlp_type):
         present_con = row[20]
         past_simple = row[21]
         future = row[22]
-        if present_simple:
-            present_simple = float(int(present_simple))
-            present_simple_dict.update({decoded_row: present_simple})
-        if present_con:
-            present_con = float(int(present_con))
-            present_con_dict.update({decoded_row: present_con})
-        if past_simple:
-            past_simple = float(int(past_simple))
-            past_simple_dict.update({decoded_row: past_simple})
-        if future:
-            future = float(int(future))
-            future_dict.update({decoded_row: future})
-        if rating:
-            rating = float(rating)
-            rating = int(rating)
-            rating_dict.update({decoded_row: rating})
-            rating_dict.update({decoded_row_1: rating})
+        present_simple_dict.update({decoded_row: present_simple})
+        present_con_dict.update({decoded_row: present_con})
+        past_simple_dict.update({decoded_row: past_simple})
+        future_dict.update({decoded_row: future})
+        rating_dict.update({decoded_row: rating})
         senti_dict.update({decoded_row: sentiScore})
         senti_pos_dict.update({decoded_row: senti_pos})
         senti_neg_dict.update({decoded_row: senti_neg})
@@ -323,23 +249,11 @@ def fetch_user_experience_data(self, nlp_type):
         present_con = row[20]
         past_simple = row[21]
         future = row[22]
-        if present_simple:
-            present_simple = float(int(present_simple))
-            present_simple_dict.update({decoded_row: present_simple})
-        if present_con:
-            present_con = float(int(present_con))
-            present_con_dict.update({decoded_row: present_con})
-        if past_simple:
-            past_simple = float(int(past_simple))
-            past_simple_dict.update({decoded_row: past_simple})
-        if future:
-            future = float(int(future))
-            future_dict.update({decoded_row: future})
-        if rating:
-            rating = float(rating)
-            rating = int(rating)
-            rating_dict.update({decoded_row: rating})
-            rating_dict.update({decoded_row_1: rating})
+        present_simple_dict.update({decoded_row: present_simple})
+        present_con_dict.update({decoded_row: present_con})
+        past_simple_dict.update({decoded_row: past_simple})
+        future_dict.update({decoded_row: future})
+        rating_dict.update({decoded_row: rating})
         senti_dict.update({decoded_row: sentiScore})
         senti_pos_dict.update({decoded_row: senti_pos})
         senti_neg_dict.update({decoded_row: senti_neg})
@@ -367,23 +281,11 @@ def fetch_user_experience_data(self, nlp_type):
         present_con = row[20]
         past_simple = row[21]
         future = row[22]
-        if present_simple:
-            present_simple = float(int(present_simple))
-            present_simple_dict.update({decoded_row: present_simple})
-        if present_con:
-            present_con = float(int(present_con))
-            present_con_dict.update({decoded_row: present_con})
-        if past_simple:
-            past_simple = float(int(past_simple))
-            past_simple_dict.update({decoded_row: past_simple})
-        if future:
-            future = float(int(future))
-            future_dict.update({decoded_row: future})
-        if rating:
-            rating = float(rating)
-            rating = int(rating)
-            rating_dict.update({decoded_row: rating})
-            rating_dict.update({decoded_row_1: rating})
+        present_simple_dict.update({decoded_row: present_simple})
+        present_con_dict.update({decoded_row: present_con})
+        past_simple_dict.update({decoded_row: past_simple})
+        future_dict.update({decoded_row: future})
+        rating_dict.update({decoded_row: rating})
         senti_dict.update({decoded_row: sentiScore})
         senti_pos_dict.update({decoded_row: senti_pos})
         senti_neg_dict.update({decoded_row: senti_neg})
@@ -432,24 +334,11 @@ def fetch_rating_data(self, nlp_type):
         present_con = row[20]
         past_simple = row[21]
         future = row[22]
-        if present_simple:
-            present_simple = float(int(present_simple))
-            present_simple_dict.update({decoded_row: present_simple})
-        if present_con:
-            present_con = float(int(present_con))
-            present_con_dict.update({decoded_row: present_con})
-        if past_simple:
-            past_simple = float(int(past_simple))
-            past_simple_dict.update({decoded_row: past_simple})
-        if future:
-            future = float(int(future))
-            future_dict.update({decoded_row: future})
-        if rating:
-            rating = float(rating)
-            rating = int(rating)
-            rating_dict.update({decoded_row: rating})
-            rating_dict.update({decoded_row_1: rating})
-
+        present_simple_dict.update({decoded_row: present_simple})
+        present_con_dict.update({decoded_row: present_con})
+        past_simple_dict.update({decoded_row: past_simple})
+        future_dict.update({decoded_row: future})
+        rating_dict.update({decoded_row: rating})
         senti_dict.update({decoded_row: sentiScore})
         senti_pos_dict.update({decoded_row: senti_pos})
         senti_neg_dict.update({decoded_row: senti_neg})
@@ -477,23 +366,11 @@ def fetch_rating_data(self, nlp_type):
         present_con = row[20]
         past_simple = row[21]
         future = row[22]
-        if present_simple:
-            present_simple = float(int(present_simple))
-            present_simple_dict.update({decoded_row: present_simple})
-        if present_con:
-            present_con = float(int(present_con))
-            present_con_dict.update({decoded_row: present_con})
-        if past_simple:
-            past_simple = float(int(past_simple))
-            past_simple_dict.update({decoded_row: past_simple})
-        if future:
-            future = float(int(future))
-            future_dict.update({decoded_row: future})
-        if rating:
-            rating = float(rating)
-            rating = int(rating)
-            rating_dict.update({decoded_row: rating})
-            rating_dict.update({decoded_row_1: rating})
+        present_simple_dict.update({decoded_row: present_simple})
+        present_con_dict.update({decoded_row: present_con})
+        past_simple_dict.update({decoded_row: past_simple})
+        future_dict.update({decoded_row: future})
+        rating_dict.update({decoded_row: rating})
         senti_dict.update({decoded_row: sentiScore})
         senti_pos_dict.update({decoded_row: senti_pos})
         senti_neg_dict.update({decoded_row: senti_neg})
@@ -521,23 +398,11 @@ def fetch_rating_data(self, nlp_type):
         present_con = row[20]
         past_simple = row[21]
         future = row[22]
-        if present_simple:
-            present_simple = float(int(present_simple))
-            present_simple_dict.update({decoded_row: present_simple})
-        if present_con:
-            present_con = float(int(present_con))
-            present_con_dict.update({decoded_row: present_con})
-        if past_simple:
-            past_simple = float(int(past_simple))
-            past_simple_dict.update({decoded_row: past_simple})
-        if future:
-            future = float(int(future))
-            future_dict.update({decoded_row: future})
-        if rating:
-            rating = float(rating)
-            rating = int(rating)
-            rating_dict.update({decoded_row: rating})
-            rating_dict.update({decoded_row_1: rating})
+        present_simple_dict.update({decoded_row: present_simple})
+        present_con_dict.update({decoded_row: present_con})
+        past_simple_dict.update({decoded_row: past_simple})
+        future_dict.update({decoded_row: future})
+        rating_dict.update({decoded_row: rating})
         senti_dict.update({decoded_row: sentiScore})
         senti_pos_dict.update({decoded_row: senti_pos})
         senti_neg_dict.update({decoded_row: senti_neg})
@@ -565,23 +430,11 @@ def fetch_rating_data(self, nlp_type):
         present_con = row[20]
         past_simple = row[21]
         future = row[22]
-        if present_simple:
-            present_simple = float(int(present_simple))
-            present_simple_dict.update({decoded_row: present_simple})
-        if present_con:
-            present_con = float(int(present_con))
-            present_con_dict.update({decoded_row: present_con})
-        if past_simple:
-            past_simple = float(int(past_simple))
-            past_simple_dict.update({decoded_row: past_simple})
-        if future:
-            future = float(int(future))
-            future_dict.update({decoded_row: future})
-        if rating:
-            rating = float(rating)
-            rating = int(rating)
-            rating_dict.update({decoded_row: rating})
-            rating_dict.update({decoded_row_1: rating})
+        present_simple_dict.update({decoded_row: present_simple})
+        present_con_dict.update({decoded_row: present_con})
+        past_simple_dict.update({decoded_row: past_simple})
+        future_dict.update({decoded_row: future})
+        rating_dict.update({decoded_row: rating})
         senti_dict.update({decoded_row: sentiScore})
         senti_pos_dict.update({decoded_row: senti_pos})
         senti_neg_dict.update({decoded_row: senti_neg})
@@ -631,24 +484,11 @@ def fetch_feature_data(self, nlp_type):
         present_con = row[20]
         past_simple = row[21]
         future = row[22]
-        if present_simple:
-            present_simple = float(int(present_simple))
-            present_simple_dict.update({decoded_row: present_simple})
-        if present_con:
-            present_con = float(int(present_con))
-            present_con_dict.update({decoded_row: present_con})
-        if past_simple:
-            past_simple = float(int(past_simple))
-            past_simple_dict.update({decoded_row: past_simple})
-        if future:
-            future = float(int(future))
-            future_dict.update({decoded_row: future})
-        if rating:
-            rating = float(rating)
-            rating = int(rating)
-            rating_dict.update({decoded_row: rating})
-            rating_dict.update({decoded_row_1: rating})
-
+        present_simple_dict.update({decoded_row: present_simple})
+        present_con_dict.update({decoded_row: present_con})
+        past_simple_dict.update({decoded_row: past_simple})
+        future_dict.update({decoded_row: future})
+        rating_dict.update({decoded_row: rating})
         senti_dict.update({decoded_row: sentiScore})
         senti_pos_dict.update({decoded_row: senti_pos})
         senti_neg_dict.update({decoded_row: senti_neg})
@@ -676,23 +516,11 @@ def fetch_feature_data(self, nlp_type):
         present_con = row[20]
         past_simple = row[21]
         future = row[22]
-        if present_simple:
-            present_simple = float(int(present_simple))
-            present_simple_dict.update({decoded_row: present_simple})
-        if present_con:
-            present_con = float(int(present_con))
-            present_con_dict.update({decoded_row: present_con})
-        if past_simple:
-            past_simple = float(int(past_simple))
-            past_simple_dict.update({decoded_row: past_simple})
-        if future:
-            future = float(int(future))
-            future_dict.update({decoded_row: future})
-        if rating:
-            rating = float(rating)
-            rating = int(rating)
-            rating_dict.update({decoded_row: rating})
-            rating_dict.update({decoded_row_1: rating})
+        present_simple_dict.update({decoded_row: present_simple})
+        present_con_dict.update({decoded_row: present_con})
+        past_simple_dict.update({decoded_row: past_simple})
+        future_dict.update({decoded_row: future})
+        rating_dict.update({decoded_row: rating})
         senti_dict.update({decoded_row: sentiScore})
         senti_pos_dict.update({decoded_row: senti_pos})
         senti_neg_dict.update({decoded_row: senti_neg})
@@ -720,23 +548,11 @@ def fetch_feature_data(self, nlp_type):
         present_con = row[20]
         past_simple = row[21]
         future = row[22]
-        if present_simple:
-            present_simple = float(int(present_simple))
-            present_simple_dict.update({decoded_row: present_simple})
-        if present_con:
-            present_con = float(int(present_con))
-            present_con_dict.update({decoded_row: present_con})
-        if past_simple:
-            past_simple = float(int(past_simple))
-            past_simple_dict.update({decoded_row: past_simple})
-        if future:
-            future = float(int(future))
-            future_dict.update({decoded_row: future})
-        if rating:
-            rating = float(rating)
-            rating = int(rating)
-            rating_dict.update({decoded_row: rating})
-            rating_dict.update({decoded_row_1: rating})
+        present_simple_dict.update({decoded_row: present_simple})
+        present_con_dict.update({decoded_row: present_con})
+        past_simple_dict.update({decoded_row: past_simple})
+        future_dict.update({decoded_row: future})
+        rating_dict.update({decoded_row: rating})
         senti_dict.update({decoded_row: sentiScore})
         senti_pos_dict.update({decoded_row: senti_pos})
         senti_neg_dict.update({decoded_row: senti_neg})
@@ -764,23 +580,11 @@ def fetch_feature_data(self, nlp_type):
         present_con = row[20]
         past_simple = row[21]
         future = row[22]
-        if present_simple:
-            present_simple = float(int(present_simple))
-            present_simple_dict.update({decoded_row: present_simple})
-        if present_con:
-            present_con = float(int(present_con))
-            present_con_dict.update({decoded_row: present_con})
-        if past_simple:
-            past_simple = float(int(past_simple))
-            past_simple_dict.update({decoded_row: past_simple})
-        if future:
-            future = float(int(future))
-            future_dict.update({decoded_row: future})
-        if rating:
-            rating = float(rating)
-            rating = int(rating)
-            rating_dict.update({decoded_row: rating})
-            rating_dict.update({decoded_row_1: rating})
+        present_simple_dict.update({decoded_row: present_simple})
+        present_con_dict.update({decoded_row: present_con})
+        past_simple_dict.update({decoded_row: past_simple})
+        future_dict.update({decoded_row: future})
+        rating_dict.update({decoded_row: rating})
         senti_dict.update({decoded_row: sentiScore})
         senti_pos_dict.update({decoded_row: senti_pos})
         senti_neg_dict.update({decoded_row: senti_neg})
