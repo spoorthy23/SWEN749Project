@@ -27,7 +27,10 @@ def fetch_bug_data(self, nlp_type):
             decoded_row = str(row[4])  # 'original_comment'
 
         decoded_row_1 = str(row[2])  # 'reviewId'
-        rating = row[5]
+        if row[5]:
+            rating = row[5]
+        else:
+            rating = -1
         sentiScore = row[13]
         senti_pos = row[14]
         senti_neg = row[15]
@@ -59,7 +62,10 @@ def fetch_bug_data(self, nlp_type):
             decoded_row = str(row[4])  # 'original_comment'
 
         decoded_row_1 = str(row[2])  # 'reviewId'
-        rating = row[5]
+        if row[5]:
+            rating = row[5]
+        else:
+            rating = -1
         sentiScore = row[13]
         senti_pos = row[14]
         senti_neg = row[15]
@@ -91,7 +97,10 @@ def fetch_bug_data(self, nlp_type):
             decoded_row = str(row[4])  # 'original_comment'
 
         decoded_row_1 = str(row[2])  # 'reviewId'
-        rating = row[5]
+        if row[5]:
+            rating = row[5]
+        else:
+            rating = -1
         sentiScore = row[13]
         senti_pos = row[14]
         senti_neg = row[15]
@@ -123,7 +132,10 @@ def fetch_bug_data(self, nlp_type):
             decoded_row = str(row[4])  # 'original_comment'
 
         decoded_row_1 = str(row[2])  # 'reviewId'
-        rating = row[5]
+        if row[5]:
+            rating = row[5]
+        else:
+            rating = -1
         sentiScore = row[13]
         senti_pos = row[14]
         senti_neg = row[15]
@@ -177,7 +189,10 @@ def fetch_user_experience_data(self, nlp_type):
             decoded_row = str(row[4])  # 'original_comment'
 
         decoded_row_1 = str(row[2])  # 'reviewId'
-        rating = row[5]
+        if row[5]:
+            rating = row[5]
+        else:
+            rating = -1
         sentiScore = row[13]
         senti_pos = row[14]
         senti_neg = row[15]
@@ -209,7 +224,10 @@ def fetch_user_experience_data(self, nlp_type):
             decoded_row = str(row[4])  # 'original_comment'
 
         decoded_row_1 = str(row[2])  # 'reviewId'
-        rating = row[5]
+        if row[5]:
+            rating = row[5]
+        else:
+            rating = -1
         sentiScore = row[13]
         senti_pos = row[14]
         senti_neg = row[15]
@@ -241,7 +259,10 @@ def fetch_user_experience_data(self, nlp_type):
             decoded_row = str(row[4])  # 'original_comment'
 
         decoded_row_1 = str(row[2])  # 'reviewId'
-        rating = row[5]
+        if row[5]:
+            rating = row[5]
+        else:
+            rating = -1
         sentiScore = row[13]
         senti_pos = row[14]
         senti_neg = row[15]
@@ -273,7 +294,10 @@ def fetch_user_experience_data(self, nlp_type):
             decoded_row = str(row[4])  # 'original_comment'
 
         decoded_row_1 = str(row[2])  # 'reviewId'
-        rating = row[5]
+        if row[5]:
+            rating = row[5]
+        else:
+            rating = -1
         sentiScore = row[13]
         senti_pos = row[14]
         senti_neg = row[15]
@@ -326,7 +350,10 @@ def fetch_rating_data(self, nlp_type):
             decoded_row = str(row[4])  # 'original_comment'
 
         decoded_row_1 = str(row[2])  # 'reviewId'
-        rating = row[5]
+        if row[5]:
+            rating = row[5]
+        else:
+            rating = -1
         sentiScore = row[13]
         senti_pos = row[14]
         senti_neg = row[15]
@@ -358,7 +385,10 @@ def fetch_rating_data(self, nlp_type):
             decoded_row = str(row[4])  # 'original_comment'
 
         decoded_row_1 = str(row[2])  # 'reviewId'
-        rating = row[5]
+        if row[5]:
+            rating = row[5]
+        else:
+            rating = -1
         sentiScore = row[13]
         senti_pos = row[14]
         senti_neg = row[15]
@@ -390,7 +420,10 @@ def fetch_rating_data(self, nlp_type):
             decoded_row = str(row[4])  # 'original_comment'
 
         decoded_row_1 = str(row[2])  # 'reviewId'
-        rating = row[5]
+        if row[5]:
+            rating = row[5]
+        else:
+            rating = -1
         sentiScore = row[13]
         senti_pos = row[14]
         senti_neg = row[15]
@@ -422,7 +455,10 @@ def fetch_rating_data(self, nlp_type):
             decoded_row = str(row[4])  # 'original_comment'
 
         decoded_row_1 = str(row[2])  # 'reviewId'
-        rating = row[5]
+        if row[5]:
+            rating = row[5]
+        else:
+            rating = -1
         sentiScore = row[13]
         senti_pos = row[14]
         senti_neg = row[15]
@@ -476,7 +512,10 @@ def fetch_feature_data(self, nlp_type):
             decoded_row = str(row[4])  # 'original_comment'
 
         decoded_row_1 = str(row[2])  # 'reviewId'
-        rating = row[5]
+        if row[5]:
+            rating = row[5]
+        else:
+            rating = -1
         sentiScore = row[13]
         senti_pos = row[14]
         senti_neg = row[15]
@@ -508,7 +547,10 @@ def fetch_feature_data(self, nlp_type):
             decoded_row = str(row[4])  # 'original_comment'
 
         decoded_row_1 = str(row[2])  # 'reviewId'
-        rating = row[5]
+        if row[5]:
+            rating = row[5]
+        else:
+            rating = -1
         sentiScore = row[13]
         senti_pos = row[14]
         senti_neg = row[15]
@@ -540,7 +582,10 @@ def fetch_feature_data(self, nlp_type):
             decoded_row = str(row[4])  # 'original_comment'
 
         decoded_row_1 = str(row[2])  # 'reviewId'
-        rating = row[5]
+        if row[5]:
+            rating = row[5]
+        else:
+            rating = -1
         sentiScore = row[13]
         senti_pos = row[14]
         senti_neg = row[15]
@@ -572,7 +617,10 @@ def fetch_feature_data(self, nlp_type):
             decoded_row = str(row[4])  # 'original_comment'
 
         decoded_row_1 = str(row[2])  # 'reviewId'
-        rating = row[5]
+        if row[5]:
+            rating = row[5]
+        else:
+            rating = -1
         sentiScore = row[13]
         senti_pos = row[14]
         senti_neg = row[15]
